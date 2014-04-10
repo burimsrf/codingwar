@@ -1,12 +1,12 @@
 (function($) {
     "use strict";
 
-    var Hack = function(options) {
+    var Base = function(options) {
         this.init(options);
     }
 
-    Hack.prototype = {
-        constructor: Hack,
+    Base.prototype = {
+        constructor: Base,
 
         init: function(options) {
             this.container = options.container;
@@ -65,14 +65,14 @@
     }
 
     $(document).on('ready', function() {
-        var hackObject = new Hack({
-            container: document.getElementById('hackContainer')
+        var baseObject = new Base({
+            container: document.getElementById('baseContainer')
         });
 
-        hackObject.draw();
+        baseObject.draw();
 
         if("WebSocket" in window) {
-            hackObject.connect();
+            baseObject.connect();
         } else {
             console.log('Websockets are not supportet on your browser!!!')
         }
@@ -85,7 +85,7 @@
             var jsonstr = JSONfn.stringify(window.rocket);
 
             // send the message as an ordinary text
-            hackObject.socket.send(jsonstr);
+            baseObject.socket.send(jsonstr);
         });
     });
 

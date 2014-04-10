@@ -7,7 +7,7 @@
 
 # Run the node websocket server
 - $ cd "project root"
-- $ runjs js/hack-server.js
+- $ runjs js/server.js
 
 # Run the clients
 - Open the index.html file into the browser
