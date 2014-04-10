@@ -47,7 +47,7 @@
         },
 
         message: function(text) {
-            console.log(text);
+            //console.log(text);
         },
 
         draw: function() {
@@ -83,14 +83,25 @@
                             }
                         }
                         if (collides) {
-                            if (window.rocket.hit > 0) {
+                            console.log('colision');
+                            if (window.rocket.hit > 0 && new Date().getTime() - window.rocket.lastHit > 1000) {
                                 window.rocket.hit=0;
-                            } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
-                                window.rocket.hit++;
                                 window.rocket.lastHit = new Date().getTime();
+                                var jsonstr = JSONfn.stringify(window.rocket);
+                                that.socket.send(jsonstr);
+                                
+                            } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
+                                console.log('Got hit');
+                                window.rocket.hit = 1;
+                                window.rocket.lastHit = new Date().getTime();
+
+                                var jsonstr = JSONfn.stringify(window.rocket);
+                                console.log(jsonstr);
+                                that.socket.send(jsonstr);
+                                
+                            } else {
+                                console.log('nope');
                             }
-                            var jsonstr = JSONfn.stringify(window.rocket);
-                            that.socket.send(jsonstr);
                         
                         }
                         
