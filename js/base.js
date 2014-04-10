@@ -54,7 +54,6 @@
             var context = this.container.getContext('2d');
             var that = this;
             this.container.width = this.container.width;
-            
             context.fillStyle = "rgb(140,0,0)";
             context.fillRect(0, 0, this.container.width, this.container.height);
 
@@ -64,11 +63,36 @@
             context.strokeRect(13, 13, this.container.width - 26, this.container.height - 26);
             that.render();
         },
+        collides: function(agentA, agentB) {
+            var distX = agentA.positionX - agentB.positionX;
+            var distY = agentA.positionY - agentB.positionY;
+        	var squaredist = (distX * distX) + (distY * distY)
+        	return squaredist <= 400;
+            
+            
+        },
         render: function() {
             var that = this;
             for(var identifier in this.agents) {
-             this.agents[identifier].init();
-             this.agents[identifier].draw(that.container);
+                var agent = this.agents[identifier];
+                    var collides = false;
+                    if (identifier == window.rocket.name) {
+                        for(var id in this.agents) {
+                            if (id != agent.name) {
+                                collides = collides || that.collides(agent, this.agents[id]);
+                            }
+                        }
+                        if (collides) {
+                            window.rocket.hit++;
+                            var jsonstr = JSONfn.stringify(window.rocket);
+                            that.socket.send(jsonstr);
+                        
+                        }
+                        
+                    }
+                    agent.init();
+                    agent.draw(that.container);
+                    
              }
         }
     }
