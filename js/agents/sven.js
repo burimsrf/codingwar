@@ -7,6 +7,8 @@
         positionY: 100,
         deltaTime: 0,
         speed: 100,
+        hit: 0,
+        lastHit: false,
         superShape: function (context, image_id, d_image, a, b, m, n1, n2, n3, pntx,pnty, scale){
             var r = 0;
             var p  = 0;
@@ -62,7 +64,12 @@
 
             // Create gradient
             var grd = ctx.createRadialGradient(this.positionX,this.positionY,5,this.positionX,this.positionY,10);
-            grd.addColorStop(0,"red");
+
+            if (this.hit) {
+                grd.addColorStop(0,"red");
+            } else {
+                grd.addColorStop(0,"green");
+            }
             grd.addColorStop(1,"transparent");
 
             // Fill with gradient
