@@ -6,7 +6,7 @@
 - $ sudo npm -g install run
 
 # Run the node websocket server
-- $ cd <project root>
+- $ cd "project root"
 - $ runjs js/hack-server.js
 
 # Run the clients
