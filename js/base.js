@@ -83,7 +83,6 @@
                             }
                         }
                         if (collides) {
-                            console.log('colision');
                             if (window.rocket.hit > 0 && new Date().getTime() - window.rocket.lastHit > 1000) {
                                 window.rocket.hit=0;
                                 window.rocket.lastHit = new Date().getTime();
@@ -91,18 +90,13 @@
                                 that.socket.send(jsonstr);
                                 
                             } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
-                                console.log('Got hit');
                                 window.rocket.hit = 1;
                                 window.rocket.lastHit = new Date().getTime();
 
                                 var jsonstr = JSONfn.stringify(window.rocket);
-                                console.log(jsonstr);
                                 that.socket.send(jsonstr);
                                 
-                            } else {
-                                console.log('nope');
-                            }
-                        
+                            } 
                         }
                         
                     }
@@ -165,11 +159,8 @@
         });
     });
     window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              function( callback ){
-                window.setTimeout(callback, 1000 / 60);
+      return  function( callback ){
+                window.setTimeout(callback, 1000 / 20);
               };
     })();
 
