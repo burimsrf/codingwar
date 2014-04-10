@@ -107,7 +107,33 @@
             container: document.getElementById('baseContainer')
         });
 
+        var keysDown = {};
+        var lastUpdate = new Date().getTime();;
+
         (function animloop(){
+
+            if (typeof window.rocket === 'undefined') {
+                return;
+            }
+            var date = new Date();
+            var deltaTime = (date.getTime() - lastUpdate) / 1000;
+            lastUpdate = date.getTime();
+
+            window.rocket.deltaTime = deltaTime;
+
+            if (Object.keys(keysDown).length > 0) {
+
+                for (var keyCode in keysDown) {
+                    window.rocket.setKeycode(parseInt(keyCode));
+                }
+
+                // send the rocket object with functions to the websocket server
+                var jsonstr = JSONfn.stringify(window.rocket);
+
+                // send the message as an ordinary text
+                baseObject.socket.send(jsonstr);
+            }
+
           requestAnimFrame(animloop);
           baseObject.draw();
         })();
@@ -118,15 +144,13 @@
             console.log('Websockets are not supportet on your browser!!!')
         }
 
+
         $(document).keydown(function(e) {
+            keysDown[e.keyCode] = 1;
+        });
 
-            window.rocket.setKeycode(e.keyCode);
-
-            // send the rocket object with functions to the websocket server
-            var jsonstr = JSONfn.stringify(window.rocket);
-
-            // send the message as an ordinary text
-            baseObject.socket.send(jsonstr);
+        $(document).keyup(function(e) {
+            delete keysDown[e.keyCode];
         });
     });
     window.requestAnimFrame = (function(){
