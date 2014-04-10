@@ -1,7 +1,7 @@
 (function($) {
     "use strict";
 
-    var Rocket = {
+    var Burim = {
         name: "Burim",
         positionX: 0,
         positionY: 0,
@@ -16,6 +16,6 @@
         }
     }
 
-    window.rocket = Rocket;
+    window.burim = Burim;
 
 })(jQuery);
