@@ -85,8 +85,9 @@
                         if (collides) {
                             if (window.rocket.hit > 0) {
                                 window.rocket.hit=0;
-                            } else {
-                                window.rocket.hit++;                                
+                            } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
+                                window.rocket.hit++;
+                                window.rocket.lastHit = new Date().getTime();
                             }
                             var jsonstr = JSONfn.stringify(window.rocket);
                             that.socket.send(jsonstr);

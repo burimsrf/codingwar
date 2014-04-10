@@ -6,6 +6,7 @@
         positionX: 0,
         positionY: 100,
         hit: 1,
+        lastHit: false,
         velocity: 10,
         sprites: [
         [20,67,184,176],
