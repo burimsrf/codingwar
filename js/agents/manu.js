@@ -7,7 +7,8 @@
         positionY: 0,
         speed: 20,
         src: 'images/bombe.jpg',
-        boom: false,
+        srcExplosion: 'images/explosion.jpg',
+        hit: 0,
         init: function () {
         },
         setKeycode: function (keycode) {
@@ -25,15 +26,6 @@
                 case 40:
                     this.positionY += this.speed;
                     break;
-                case 13:
-                    if (that.boom === false) {
-                        that.src = "images/explosion.jpg";
-                        that.boom = true;
-                    } else {
-                        that.src = "images/bombe.jpg";
-                        that.boom = false;
-                    }
-                    break;
             }
         },
         draw: function (container) {
@@ -41,13 +33,18 @@
             var imageObj = new Image();
             var ctx = container.getContext('2d');
 
-            imageObj.src = this.src;
+            if (this.hit > 1) {
+                imageObj.src = this.srcExplosion;
+            } else {
+                imageObj.src = this.src;
+            }
+
             ctx.drawImage(
                 imageObj,
                 that.positionX,
                 that.positionY,
-                18,
-                27
+                20,
+                20
             );
         }
     };
