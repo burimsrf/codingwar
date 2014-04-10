@@ -1,25 +1,57 @@
-(function($) {
+(function ($) {
     "use strict";
 
     var Manu = {
         name: "Manu",
         positionX: 0,
         positionY: 0,
-        keyCode: 0,
-        init: function() {
-            this.initObserver();
+        speed: 20,
+        src: 'http://us.cdn3.123rf.com/168nwm/andrewshka/andrewshka1104/andrewshka110400001/9363941-sehr-bose-cartoon-bombe-explodieren-bereit.jpg',
+        boom: false,
+        init: function () {
         },
-        initObserver: function() {
+        setKeycode: function (keycode) {
+            var that = this;
+            switch (keycode) {
+                case 37:
+                    this.positionX -= this.speed;
+                    break;
+                case 38:
+                    this.positionY -= this.speed;
+                    break;
+                case 39:
+                    this.positionX += this.speed;
+                    break;
+                case 40:
+                    this.positionY += this.speed;
+                    break;
+                case 13:
+                    if (that.boom === false) {
+                        that.src = "http://thumbs.dreamstime.com/x/bang-comic-explosion-logo-icon-text-20006989.jpg";
+                        that.boom = true;
+                    } else {
+                        that.src = "http://us.cdn3.123rf.com/168nwm/andrewshka/andrewshka1104/andrewshka110400001/9363941-sehr-bose-cartoon-bombe-explodieren-bereit.jpg";
+                        that.boom = false;
+                    }
+                    break;
+            }
+        },
+        draw: function (container) {
+            var that = this;
+            var imageObj = new Image();
+            var ctx = container.getContext('2d');
 
-        },
-        draw: function(container) {
-            var context = container.getContext('2d');
-            context.fillStyle = "rgb(140,150,0)";
-            context.fillRect(this.keyCode, this.keyCode, 20, 20);
+            imageObj.src = this.src;
+            ctx.drawImage(
+                imageObj,
+                that.positionX,
+                that.positionY,
+                18,
+                27
+            );
         }
     };
 
-    window.manu = Manu;
-
+    window.rocket = Manu;
 
 })(jQuery);
