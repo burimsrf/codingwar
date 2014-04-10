@@ -47,7 +47,7 @@
         },
 
         message: function(text) {
-            console.log(text);
+            //console.log(text);
         },
 
         draw: function() {
@@ -83,15 +83,20 @@
                             }
                         }
                         if (collides) {
-                            if (window.rocket.hit > 0) {
+                            if (window.rocket.hit > 0 && new Date().getTime() - window.rocket.lastHit > 1000) {
                                 window.rocket.hit=0;
-                            } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
-                                window.rocket.hit++;
                                 window.rocket.lastHit = new Date().getTime();
-                            }
-                            var jsonstr = JSONfn.stringify(window.rocket);
-                            that.socket.send(jsonstr);
-                        
+                                var jsonstr = JSONfn.stringify(window.rocket);
+                                that.socket.send(jsonstr);
+                                
+                            } else if (new Date().getTime() - window.rocket.lastHit > 10000 ) {
+                                window.rocket.hit = 1;
+                                window.rocket.lastHit = new Date().getTime();
+
+                                var jsonstr = JSONfn.stringify(window.rocket);
+                                that.socket.send(jsonstr);
+                                
+                            } 
                         }
                         
                     }
@@ -154,11 +159,8 @@
         });
     });
     window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       ||
-              window.webkitRequestAnimationFrame ||
-              window.mozRequestAnimationFrame    ||
-              function( callback ){
-                window.setTimeout(callback, 1000 / 60);
+      return  function( callback ){
+                window.setTimeout(callback, 1000 / 20);
               };
     })();
 

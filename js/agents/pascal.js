@@ -5,7 +5,7 @@
         name: "Powerueli",
         positionX: 0,
         positionY: 100,
-        hit: 1,
+        hit: 0,
         lastHit: false,
         velocity: 10,
         sprites: [
