@@ -6,7 +6,7 @@
         positionX: 0,
         positionY: 0,
         speed: 20,
-        src: 'http://us.cdn3.123rf.com/168nwm/andrewshka/andrewshka1104/andrewshka110400001/9363941-sehr-bose-cartoon-bombe-explodieren-bereit.jpg',
+        src: 'images/bombe.jpg',
         boom: false,
         init: function () {
         },
@@ -27,10 +27,10 @@
                     break;
                 case 13:
                     if (that.boom === false) {
-                        that.src = "http://thumbs.dreamstime.com/x/bang-comic-explosion-logo-icon-text-20006989.jpg";
+                        that.src = "images/explosion.jpg";
                         that.boom = true;
                     } else {
-                        that.src = "http://us.cdn3.123rf.com/168nwm/andrewshka/andrewshka1104/andrewshka110400001/9363941-sehr-bose-cartoon-bombe-explodieren-bereit.jpg";
+                        that.src = "images/bombe.jpg";
                         that.boom = false;
                     }
                     break;
