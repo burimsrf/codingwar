@@ -9,8 +9,7 @@
         init: function() {
 
         },
-        draw: function() {
-            var container = document.getElementById('hackContainer');
+        draw: function(container) {
             var context = container.getContext('2d');
             context.fillStyle = "rgb(0,150,0)";
             context.fillRect(this.keyCode, this.keyCode, 20, 20);

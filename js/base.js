@@ -19,7 +19,7 @@
 
                 var ws_creator = window['MozWebSocket'] ? window['MozWebSocket'] : window['WebSocket'];
 
-                that.socket = new ws_creator('ws://127.0.0.1:1337');
+                that.socket = new ws_creator('ws://10.175.56.159:1337');
 
                 this.message('Socket Status: ' + that.socket.readyState);
 
@@ -35,7 +35,7 @@
 
                     // run the object methods are coming over the websocket clients
                     rocketObj.init();
-                    rocketObj.draw(10, 13);
+                    rocketObj.draw(that.container);
                 }
 
                 this.socket.onclose = function(){
