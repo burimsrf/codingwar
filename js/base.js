@@ -7,7 +7,7 @@
 
     Base.prototype = {
         constructor: Base,
-
+        agents: {},
         init: function(options) {
             this.container = options.container;
         },
@@ -34,8 +34,7 @@
                     var rocketObj = JSONfn.parse(rocket.data.text);
 
                     // run the object methods are coming over the websocket clients
-                    rocketObj.init();
-                    rocketObj.draw(that.container);
+                    that.agents[rocketObj.name] = rocketObj;
                 }
 
                 this.socket.onclose = function(){
@@ -53,7 +52,9 @@
 
         draw: function() {
             var context = this.container.getContext('2d');
-
+            var that = this;
+            this.container.width = this.container.width;
+            
             context.fillStyle = "rgb(140,0,0)";
             context.fillRect(0, 0, this.container.width, this.container.height);
 
@@ -61,6 +62,14 @@
 
             context.fillStyle = "rgb(0,0,0)";
             context.strokeRect(13, 13, this.container.width - 26, this.container.height - 26);
+            that.render();
+        },
+        render: function() {
+            var that = this;
+            for(var identifier in this.agents) {
+             this.agents[identifier].init();
+             this.agents[identifier].draw(that.container);
+             }
         }
     }
 
@@ -69,7 +78,10 @@
             container: document.getElementById('baseContainer')
         });
 
-        baseObject.draw();
+        (function animloop(){
+          requestAnimFrame(animloop);
+          baseObject.draw();
+        })();
 
         if("WebSocket" in window) {
             baseObject.connect();
@@ -79,7 +91,7 @@
 
         $(document).keydown(function(e) {
 
-            window.rocket.keyCode = e.keyCode;
+            window.rocket.setKeycode(e.keyCode);
 
             // send the rocket object with functions to the websocket server
             var jsonstr = JSONfn.stringify(window.rocket);
@@ -88,5 +100,13 @@
             baseObject.socket.send(jsonstr);
         });
     });
+    window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              function( callback ){
+                window.setTimeout(callback, 1000 / 60);
+              };
+    })();
 
 })(jQuery);
