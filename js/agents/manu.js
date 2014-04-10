@@ -6,7 +6,7 @@
         positionX: 0,
         positionY: 0,
         speed: 20,
-        src: '/codingwar/images/bombe.jpg',
+        src: 'images/bombe.jpg',
         boom: false,
         init: function () {
         },
@@ -27,10 +27,10 @@
                     break;
                 case 13:
                     if (that.boom === false) {
-                        that.src = "/codingwar/images/explosion.jpg";
+                        that.src = "images/explosion.jpg";
                         that.boom = true;
                     } else {
-                        that.src = "/codingwar/images/bombe.jpg";
+                        that.src = "images/bombe.jpg";
                         that.boom = false;
                     }
                     break;
