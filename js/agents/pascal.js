@@ -5,7 +5,7 @@
         name: "Powerueli",
         positionX: 0,
         positionY: 100,
-        hit: 0,
+        hit: 1,
         velocity: 10,
         sprites: [
         [20,67,184,176],
@@ -77,7 +77,7 @@
                 that.positionY--;
             }
             var context = container.getContext('2d');
-            if (this.hit>1) {
+            if (this.hit>=1) {
                 var sprite = new Image();
                 sprite.src = 'images/megaueli.jpg'
             

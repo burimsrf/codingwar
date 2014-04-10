@@ -78,12 +78,16 @@
                     var collides = false;
                     if (identifier == window.rocket.name) {
                         for(var id in this.agents) {
-                            if (id != agent.name) {
+                            if (id != agent.name && this.agents[id].hit > 0) {
                                 collides = collides || that.collides(agent, this.agents[id]);
                             }
                         }
                         if (collides) {
-                            window.rocket.hit++;
+                            if (window.rocket.hit > 0) {
+                                window.rocket.hit=0;
+                            } else {
+                                window.rocket.hit++;                                
+                            }
                             var jsonstr = JSONfn.stringify(window.rocket);
                             that.socket.send(jsonstr);
                         
